@@ -2,7 +2,6 @@ linters-settings:
   govet:
     enable:
       - shadow
-      - fieldalignment
   revive:
     confidence: 0
   gocyclo:
