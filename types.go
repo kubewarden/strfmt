@@ -45,6 +45,11 @@ var (
 	DateTimeFormats = []string{RFC3339Micro, RFC3339MicroNoColon, RFC3339Millis, RFC3339MillisNoColon, time.RFC3339, time.RFC3339Nano, ISO8601LocalTime, ISO8601TimeWithReducedPrecision, ISO8601TimeWithReducedPrecisionLocaltime, ISO8601TimeUniversalSortableDateTimePattern}
 )
 
+// NewDateTime is a representation of zero value for DateTime type
+func NewDateTime() DateTime {
+	return DateTime(time.Unix(0, 0).UTC())
+}
+
 // MarshalJSON returns the DateTime as JSON
 func (t DateTime) MarshalJSON() ([]byte, error) {
 	return json.Marshal(NormalizeTimeForMarshal(time.Time(t)).Format(MarshalFormat))
@@ -83,9 +88,4 @@ func ParseDateTime(data string) (DateTime, error) {
 		return DateTime(dd), nil
 	}
 	return DateTime{}, lastError
-}
-
-// NewDateTime is a representation of zero value for DateTime type
-func NewDateTime() DateTime {
-	return DateTime(time.Unix(0, 0).UTC())
 }
