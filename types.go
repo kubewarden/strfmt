@@ -1,5 +1,4 @@
-// This code has been cherry-picked from https://github.com/go-openapi/strfmt
-
+// Package strfmt code has been cherry-picked from https://github.com/go-openapi/strfmt
 package strfmt
 
 import (
@@ -62,14 +61,19 @@ func (t *DateTime) UnmarshalJSON(data []byte) error {
 	}
 
 	var tstr string
-	if err := json.Unmarshal(data, &tstr); err != nil {
+
+	err := json.Unmarshal(data, &tstr)
+	if err != nil {
 		return err
 	}
+
 	tt, err := ParseDateTime(tstr)
 	if err != nil {
 		return err
 	}
+
 	*t = tt
+
 	return nil
 }
 
@@ -78,14 +82,18 @@ func ParseDateTime(data string) (DateTime, error) {
 	if data == "" {
 		return NewDateTime(), nil
 	}
+
 	var lastError error
+
 	for _, layout := range DateTimeFormats {
 		dd, err := time.Parse(layout, data)
 		if err != nil {
 			lastError = err
 			continue
 		}
+
 		return DateTime(dd), nil
 	}
+
 	return DateTime{}, lastError
 }
