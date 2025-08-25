@@ -47,6 +47,7 @@ func TestParseDateTime_errorCases(t *testing.T) {
 func TestDateTime_UnmarshalJSON(t *testing.T) {
 	for caseNum, example := range testCases {
 		t.Logf("Case #%d", caseNum)
+
 		pp := NewDateTime()
 		err := pp.UnmarshalJSON(esc(example.in))
 		assert.NoError(t, err)
@@ -70,6 +71,7 @@ func TestDateTime_UnmarshalJSON(t *testing.T) {
 func TestDateTime_MarshalJSON(t *testing.T) {
 	for caseNum, example := range testCases {
 		t.Logf("Case #%d", caseNum)
+
 		dt := DateTime(example.time)
 		bb, err := dt.MarshalJSON()
 		assert.NoError(t, err)
@@ -79,6 +81,7 @@ func TestDateTime_MarshalJSON(t *testing.T) {
 
 func TestDateTime_MarshalJSON_Override(t *testing.T) {
 	oldNormalizeMarshal := NormalizeTimeForMarshal
+
 	defer func() {
 		NormalizeTimeForMarshal = oldNormalizeMarshal
 	}()
@@ -88,6 +91,7 @@ func TestDateTime_MarshalJSON_Override(t *testing.T) {
 	}
 	for caseNum, example := range testCases {
 		t.Logf("Case #%d", caseNum)
+
 		dt := DateTime(example.time.UTC())
 		bb, err := dt.MarshalJSON()
 		assert.NoError(t, err)
@@ -100,5 +104,6 @@ func esc(v []byte) []byte {
 	buf.WriteByte('"')
 	buf.Write(v)
 	buf.WriteByte('"')
+
 	return buf.Bytes()
 }
